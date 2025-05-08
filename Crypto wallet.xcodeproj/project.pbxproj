@@ -10,9 +10,10 @@
 		854229642DCBFA5700965106 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229632DCBFA5700965106 /* AppDelegate.swift */; };
 		854229662DCBFA5700965106 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229652DCBFA5700965106 /* SceneDelegate.swift */; };
 		854229682DCBFA5700965106 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229672DCBFA5700965106 /* ViewController.swift */; };
-		8542296B2DCBFA5700965106 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 8542296A2DCBFA5700965106 /* Base */; };
 		8542296D2DCBFA5800965106 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8542296C2DCBFA5800965106 /* Assets.xcassets */; };
 		854229702DCBFA5800965106 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 8542296F2DCBFA5800965106 /* Base */; };
+		854229792DCCAA0A00965106 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 854229782DCCAA0A00965106 /* SnapKit */; };
+		8542297B2DCCACC700965106 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 8542297A2DCCACC700965106 /* .gitignore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,10 +21,10 @@
 		854229632DCBFA5700965106 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		854229652DCBFA5700965106 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		854229672DCBFA5700965106 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		8542296A2DCBFA5700965106 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8542296C2DCBFA5800965106 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8542296F2DCBFA5800965106 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		854229712DCBFA5800965106 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8542297A2DCCACC700965106 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				854229792DCCAA0A00965106 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +43,7 @@
 			isa = PBXGroup;
 			children = (
 				854229622DCBFA5700965106 /* Crypto wallet */,
+				8542297A2DCCACC700965106 /* .gitignore */,
 				854229612DCBFA5700965106 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,15 +59,86 @@
 		854229622DCBFA5700965106 /* Crypto wallet */ = {
 			isa = PBXGroup;
 			children = (
+				8542297C2DCCAD2900965106 /* Sources */,
 				854229632DCBFA5700965106 /* AppDelegate.swift */,
 				854229652DCBFA5700965106 /* SceneDelegate.swift */,
-				854229672DCBFA5700965106 /* ViewController.swift */,
-				854229692DCBFA5700965106 /* Main.storyboard */,
 				8542296C2DCBFA5800965106 /* Assets.xcassets */,
 				8542296E2DCBFA5800965106 /* LaunchScreen.storyboard */,
 				854229712DCBFA5800965106 /* Info.plist */,
 			);
 			path = "Crypto wallet";
+			sourceTree = "<group>";
+		};
+		8542297C2DCCAD2900965106 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				854229852DCCB42800965106 /* Coordinator */,
+				854229802DCCB1DF00965106 /* Utils */,
+				8542297F2DCCB1CE00965106 /* Models */,
+				8542297E2DCCAD5600965106 /* Services */,
+				8542297D2DCCAD4700965106 /* Modules */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		8542297D2DCCAD4700965106 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				854229832DCCB22D00965106 /* CoinDetail */,
+				854229822DCCB22100965106 /* CryptoWallet */,
+				854229812DCCB1FF00965106 /* Auth */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		8542297E2DCCAD5600965106 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		8542297F2DCCB1CE00965106 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		854229802DCCB1DF00965106 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		854229812DCCB1FF00965106 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				854229672DCBFA5700965106 /* ViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		854229822DCCB22100965106 /* CryptoWallet */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CryptoWallet;
+			sourceTree = "<group>";
+		};
+		854229832DCCB22D00965106 /* CoinDetail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = CoinDetail;
+			sourceTree = "<group>";
+		};
+		854229852DCCB42800965106 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +157,9 @@
 			dependencies = (
 			);
 			name = "Crypto wallet";
+			packageProductDependencies = (
+				854229782DCCAA0A00965106 /* SnapKit */,
+			);
 			productName = "Crypto wallet";
 			productReference = 854229602DCBFA5700965106 /* Crypto wallet.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +188,9 @@
 				Base,
 			);
 			mainGroup = 854229572DCBFA5700965106;
+			packageReferences = (
+				854229772DCCAA0A00965106 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 854229612DCBFA5700965106 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -126,8 +206,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8542296D2DCBFA5800965106 /* Assets.xcassets in Resources */,
+				8542297B2DCCACC700965106 /* .gitignore in Resources */,
 				854229702DCBFA5800965106 /* Base in Resources */,
-				8542296B2DCBFA5700965106 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,14 +227,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		854229692DCBFA5700965106 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8542296A2DCBFA5700965106 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		8542296E2DCBFA5800965106 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -297,7 +369,6 @@
 				INFOPLIST_FILE = "Crypto wallet/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -325,7 +396,6 @@
 				INFOPLIST_FILE = "Crypto wallet/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -363,6 +433,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		854229772DCCAA0A00965106 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		854229782DCCAA0A00965106 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 854229772DCCAA0A00965106 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 854229582DCBFA5700965106 /* Project object */;
 }
