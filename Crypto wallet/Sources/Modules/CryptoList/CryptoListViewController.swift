@@ -1,0 +1,18 @@
+//
+//  CryptoListViewController.swift
+//  Crypto wallet
+//
+//  Created by Fedor Bebinov on 08.05.2025.
+//
+
+import UIKit
+
+class CryptoListViewController: UIViewController {
+    
+    var onLogout: (() -> Void)?
+    var onCoinSelect: ((Coin) -> Void)?
+    
+    override func viewDidLoad() {
+        view.backgroundColor = .red
+    }
+}
