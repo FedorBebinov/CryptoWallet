@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		854229642DCBFA5700965106 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229632DCBFA5700965106 /* AppDelegate.swift */; };
 		854229662DCBFA5700965106 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229652DCBFA5700965106 /* SceneDelegate.swift */; };
-		854229682DCBFA5700965106 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229672DCBFA5700965106 /* ViewController.swift */; };
 		8542296D2DCBFA5800965106 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8542296C2DCBFA5800965106 /* Assets.xcassets */; };
 		854229702DCBFA5800965106 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 8542296F2DCBFA5800965106 /* Base */; };
 		854229792DCCAA0A00965106 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 854229782DCCAA0A00965106 /* SnapKit */; };
@@ -21,13 +20,15 @@
 		8542298F2DCCEB4F00965106 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8542298E2DCCEB4F00965106 /* AppFlow.swift */; };
 		854229912DCCEB6D00965106 /* Coin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229902DCCEB6D00965106 /* Coin.swift */; };
 		854229932DCCEE5E00965106 /* CoinDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229922DCCEE5E00965106 /* CoinDetailViewController.swift */; };
+		854229952DCD4FEA00965106 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229942DCD4FEA00965106 /* AuthViewModel.swift */; };
+		854229972DCE65E600965106 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 854229962DCE65E600965106 /* Poppins-Regular.ttf */; };
+		854229992DCE6C1500965106 /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229982DCE6C1500965106 /* Font+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		854229602DCBFA5700965106 /* Crypto wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crypto wallet.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		854229632DCBFA5700965106 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		854229652DCBFA5700965106 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		854229672DCBFA5700965106 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		8542296C2DCBFA5800965106 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8542296F2DCBFA5800965106 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		854229712DCBFA5800965106 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -39,6 +40,9 @@
 		8542298E2DCCEB4F00965106 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
 		854229902DCCEB6D00965106 /* Coin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coin.swift; sourceTree = "<group>"; };
 		854229922DCCEE5E00965106 /* CoinDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailViewController.swift; sourceTree = "<group>"; };
+		854229942DCD4FEA00965106 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		854229962DCE65E600965106 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		854229982DCE6C1500965106 /* Font+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +80,7 @@
 				8542297C2DCCAD2900965106 /* Sources */,
 				854229632DCBFA5700965106 /* AppDelegate.swift */,
 				854229652DCBFA5700965106 /* SceneDelegate.swift */,
+				854229962DCE65E600965106 /* Poppins-Regular.ttf */,
 				8542296C2DCBFA5800965106 /* Assets.xcassets */,
 				8542296E2DCBFA5800965106 /* LaunchScreen.storyboard */,
 				854229712DCBFA5800965106 /* Info.plist */,
@@ -124,6 +129,7 @@
 		854229802DCCB1DF00965106 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				854229982DCE6C1500965106 /* Font+Extension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -131,8 +137,8 @@
 		854229812DCCB1FF00965106 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				854229672DCBFA5700965106 /* ViewController.swift */,
 				8542298A2DCCD78800965106 /* AuthViewController.swift */,
+				854229942DCD4FEA00965106 /* AuthViewModel.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -229,6 +235,7 @@
 				8542296D2DCBFA5800965106 /* Assets.xcassets in Resources */,
 				8542297B2DCCACC700965106 /* .gitignore in Resources */,
 				854229702DCBFA5800965106 /* Base in Resources */,
+				854229972DCE65E600965106 /* Poppins-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,13 +246,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				854229952DCD4FEA00965106 /* AuthViewModel.swift in Sources */,
 				854229912DCCEB6D00965106 /* Coin.swift in Sources */,
+				854229992DCE6C1500965106 /* Font+Extension.swift in Sources */,
 				8542298D2DCCD9C200965106 /* CryptoListViewController.swift in Sources */,
 				8542298F2DCCEB4F00965106 /* AppFlow.swift in Sources */,
 				854229872DCCBB8E00965106 /* AppCoordinator.swift in Sources */,
 				854229932DCCEE5E00965106 /* CoinDetailViewController.swift in Sources */,
 				854229892DCCC3C100965106 /* UserSessionService.swift in Sources */,
-				854229682DCBFA5700965106 /* ViewController.swift in Sources */,
 				854229642DCBFA5700965106 /* AppDelegate.swift in Sources */,
 				8542298B2DCCD78800965106 /* AuthViewController.swift in Sources */,
 				854229662DCBFA5700965106 /* SceneDelegate.swift in Sources */,

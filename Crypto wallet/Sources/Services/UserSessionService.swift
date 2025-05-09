@@ -17,4 +17,18 @@ final class UserSessionService {
     func setLoggedIn(_ loggedIn: Bool) {
         UserDefaults.standard.set(loggedIn, forKey: loggedInKey)
     }
+    
+    func login(username: String, password: String) -> Bool {
+        if username == "1234" && password == "1234" {
+            setLoggedIn(true)
+            return true
+        } else {
+            setLoggedIn(false)
+            return false
+        }
+    }
+    
+    func logout() {
+        setLoggedIn(false)
+    }
 }

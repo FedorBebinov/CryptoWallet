@@ -30,7 +30,8 @@ class AppCoordinator: Coordiantor {
         
         switch flow {
         case .auth:
-            let loginVC = AuthViewController()
+            let viewModel = AuthViewModel(userSessionService: userSessionService)
+            let loginVC = AuthViewController(viewModel: viewModel)
             // Клоужер для успешного входа:
             loginVC.onLoginSuccess = { [weak self] in
                 self?.userSessionService.setLoggedIn(true)
