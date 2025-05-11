@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Crypto {
+struct Crypto: Equatable {
     let name: String
     let symbol: String
     let iconName: String

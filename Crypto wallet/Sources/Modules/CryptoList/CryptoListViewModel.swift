@@ -58,17 +58,22 @@ final class CryptoListViewModel {
     private func fetchData() {
         isLoading = true
         onUpdate?()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+        
+        CryptoAPIService.shared.fetchCryptos(symbols: CryptoList.defaultSymbols) { [weak self] result in
             guard let self = self else { return }
-            // SAMPLE DATA
-            self.cryptos = [
-                Crypto(name: "Bitcoin", symbol: "BTC", iconName: "bitcoin", price: 32128.8, priceChange: 0.025),
-                Crypto(name: "Neo", symbol: "NEO", iconName: "neo", price: 13221.55, priceChange: 0.022),
-                Crypto(name: "Achain", symbol: "ACT", iconName: "achain", price: 28312.22, priceChange: -0.022)
-            ]
-            self.applySort()
-            self.isLoading = false
-            self.onUpdate?()
+            
+            switch result {
+            case .success(let cryptos):
+                self.cryptos = cryptos
+                self.applySort()
+                self.isLoading = false
+                self.onUpdate?()
+            case .failure(let error):
+                self.isLoading = false
+                self.cryptos = []
+                self.onUpdate?()
+                self.onError?(error.localizedDescription)
+            }
         }
     }
     

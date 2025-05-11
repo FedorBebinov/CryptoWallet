@@ -85,7 +85,7 @@ final class CryptoListViewController: UIViewController {
     
     private let sortButton: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setImage(UIImage(systemName: "arrow.up.arrow.down"), for: .normal)
+        btn.setImage(UIImage(resource: .sortList), for: .normal)
         btn.tintColor = UIColor(red: 19/255, green: 22/255, blue: 34/255, alpha: 1)
         return btn
     }()
@@ -134,8 +134,12 @@ final class CryptoListViewController: UIViewController {
     // MARK: - Layout
     
     private func setupLayout() {
+        
+        
+        navigationController?.isNavigationBarHidden = true
+        
         guard !didSetupLayout else { return }
-            didSetupLayout = true
+        didSetupLayout = true
         
         view.addSubview(headerBackgroundView)
         headerBackgroundView.snp.makeConstraints { make in
@@ -229,7 +233,6 @@ final class CryptoListViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    // Выпадающее меню для многоточия
     /*@objc private func showDotsMenu(_ sender: UIButton) {
      let refresh = UIAction(title: "Обновить", image: UIImage(systemName: "arrow.clockwise")) { [weak self] _ in
      self?.handleRefresh()
