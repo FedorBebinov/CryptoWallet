@@ -9,10 +9,17 @@ import UIKit
 
 enum Font {
     static let regular = "Poppins-Regular"
+    static let bold = "Poppins-Bold"
 }
 
 extension UIFont {
     static func poppinsRegular(size: CGFloat) -> UIFont {
         return UIFont(name: Font.regular, size: size)!
     }
+    
+    static func poppinsBold(size: CGFloat) -> UIFont {
+        return UIFont(name: Font.bold, size: size)!
+    }
 }
+
+

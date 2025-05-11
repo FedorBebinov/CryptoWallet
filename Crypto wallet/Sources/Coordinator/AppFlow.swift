@@ -10,5 +10,5 @@ import Foundation
 enum AppFlow {
     case auth
     case cryptoList
-    case coinDetail(coin: Coin)
+    case coinDetail(crypto: Crypto)
 }

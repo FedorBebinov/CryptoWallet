@@ -7,13 +7,13 @@
 
 import UIKit
 
-class CoinDetailViewController: UIViewController {
+class CryptoDetailViewController: UIViewController {
     
     var onBack: (() -> Void)?
-    let coin: Coin
+    let crypto: Crypto
     
-    init(coin: Coin) {
-        self.coin = coin
+    init(crypto: Crypto) {
+        self.crypto = crypto
         super.init(nibName: nil, bundle: nil)
     }
     

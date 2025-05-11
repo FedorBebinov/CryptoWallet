@@ -106,7 +106,7 @@ final class AuthViewController: UIViewController {
         userIconView.isUserInteractionEnabled = false
         
         let userIconWrapper = UIView()
-        userIconWrapper.isUserInteractionEnabled = false 
+        userIconWrapper.isUserInteractionEnabled = false
         userIconWrapper.addSubview(userIconView)
         userIconView.snp.makeConstraints { make in
             make.left.equalToSuperview().offset(leftPadding)

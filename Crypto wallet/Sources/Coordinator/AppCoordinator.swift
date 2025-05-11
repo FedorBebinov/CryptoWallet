@@ -15,6 +15,7 @@ class AppCoordinator: Coordiantor {
     private let window: UIWindow
     private let userSessionService: UserSessionService
     private var currentFlow: AppFlow?
+    private var mainTabBarController: MainTabBarController?
     
     init(window: UIWindow, userSessionService: UserSessionService){
         self.window = window
@@ -32,7 +33,6 @@ class AppCoordinator: Coordiantor {
         case .auth:
             let viewModel = AuthViewModel(userSessionService: userSessionService)
             let loginVC = AuthViewController(viewModel: viewModel)
-            // Клоужер для успешного входа:
             loginVC.onLoginSuccess = { [weak self] in
                 self?.userSessionService.setLoggedIn(true)
                 self?.show(flow: .cryptoList)
@@ -41,27 +41,33 @@ class AppCoordinator: Coordiantor {
             window.makeKeyAndVisible()
             
         case .cryptoList:
-            let listVC = CryptoListViewController()
-            // Клоужер для выхода:
-            listVC.onLogout = { [weak self] in
+            if let tabBar = mainTabBarController {
+                window.rootViewController = tabBar
+                window.makeKeyAndVisible()
+                return
+            }
+            
+            let tabBar = MainTabBarController()
+            tabBar.onLogout = { [weak self] in
                 self?.userSessionService.setLoggedIn(false)
                 self?.show(flow: .auth)
             }
-            // Клоужер для выбора монеты:
-            listVC.onCoinSelect = { [weak self] coin in
-                self?.show(flow: .coinDetail(coin: coin))
+            tabBar.onShowCryptoDetail = { [weak self] crypto in
+                self?.show(flow: .coinDetail(crypto: crypto))
             }
-            window.rootViewController = listVC
+            window.rootViewController = tabBar
             window.makeKeyAndVisible()
+            mainTabBarController = tabBar
             
-        case .coinDetail(let coin):
-            let coinVC = CoinDetailViewController(coin: coin)
-            // Кнопка Back, для возвращения назад:
-            coinVC.onBack = { [weak self] in
-                self?.show(flow: .cryptoList)
+        case .coinDetail(let crypto):
+            guard let tabBar = mainTabBarController,
+                  let nav = tabBar.selectedViewController as? UINavigationController else { return }
+            
+            let coinVC = CryptoDetailViewController(crypto: crypto)
+            coinVC.onBack = {
+                nav.popViewController(animated: true)
             }
-            window.rootViewController = coinVC
-            window.makeKeyAndVisible()
+            nav.pushViewController(coinVC, animated: true)
         }
     }
 }
