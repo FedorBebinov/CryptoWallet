@@ -31,6 +31,7 @@
 		854229A52DD0B59500965106 /* CryptoAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229A42DD0B59500965106 /* CryptoAPIService.swift */; };
 		854229A72DD0C4D700965106 /* CryptoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229A62DD0C4D700965106 /* CryptoResponse.swift */; };
 		854229A92DD0D1E300965106 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229A82DD0D1E300965106 /* Constants.swift */; };
+		854229AB2DD0FE8900965106 /* CryptoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229AA2DD0FE8900965106 /* CryptoDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		854229A42DD0B59500965106 /* CryptoAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoAPIService.swift; sourceTree = "<group>"; };
 		854229A62DD0C4D700965106 /* CryptoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoResponse.swift; sourceTree = "<group>"; };
 		854229A82DD0D1E300965106 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		854229AA2DD0FE8900965106 /* CryptoDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				854229922DCCEE5E00965106 /* CryptoDetailViewController.swift */,
+				854229AA2DD0FE8900965106 /* CryptoDetailViewModel.swift */,
 			);
 			path = CoinDetail;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				854229872DCCBB8E00965106 /* AppCoordinator.swift in Sources */,
 				854229932DCCEE5E00965106 /* CryptoDetailViewController.swift in Sources */,
 				854229892DCCC3C100965106 /* UserSessionService.swift in Sources */,
+				854229AB2DD0FE8900965106 /* CryptoDetailViewModel.swift in Sources */,
 				8542299B2DCE96B800965106 /* CryptoTableViewCell.swift in Sources */,
 				854229642DCBFA5700965106 /* AppDelegate.swift in Sources */,
 				854229A12DCF625200965106 /* MainTabBarController.swift in Sources */,
