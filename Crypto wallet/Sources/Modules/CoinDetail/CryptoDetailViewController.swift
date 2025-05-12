@@ -23,11 +23,11 @@ class CryptoDetailViewController: UIViewController {
     private let backBackground: UIView = {
         let v = UIView()
         v.backgroundColor = .white
-        v.layer.cornerRadius = 18
-        v.layer.shadowColor = UIColor.black.cgColor
+        v.layer.cornerRadius = 24
+        /*v.layer.shadowColor = UIColor.black.cgColor
         v.layer.shadowOpacity = 0.10
         v.layer.shadowRadius = 4
-        v.layer.shadowOffset = CGSize(width: 0, height: 2)
+        v.layer.shadowOffset = CGSize(width: 0, height: 2)*/
         return v
     }()
     
@@ -42,7 +42,7 @@ class CryptoDetailViewController: UIViewController {
 
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        label.font = .poppinsRegular(size: 14)
         label.textColor = .black
         label.textAlignment = .center
         return label
@@ -50,15 +50,22 @@ class CryptoDetailViewController: UIViewController {
 
     private let priceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
+        label.font = .poppinsRegular(size: 28)
         label.textColor = UIColor(red: 35/255, green: 39/255, blue: 47/255, alpha: 1)
         return label
     }()
 
     private let percentLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .medium)
+        label.font = .poppinsRegular(size: 14)
         return label
+    }()
+    
+    private let arrowImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        iv.tintColor = .systemGreen
+        return iv
     }()
 
     private let periodControl: UISegmentedControl = {
@@ -156,8 +163,8 @@ class CryptoDetailViewController: UIViewController {
         view.addSubview(backBackground)
         backBackground.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(18)
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(5)
-            $0.width.height.equalTo(36)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(10)
+            $0.width.height.equalTo(48)
         }
         backBackground.addSubview(backButton)
         backButton.snp.makeConstraints { $0.edges.equalToSuperview() }
@@ -172,7 +179,7 @@ class CryptoDetailViewController: UIViewController {
         view.addSubview(statisticCard)
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(backBackground.snp.bottom).offset(20)
+            $0.centerY.equalTo(backBackground.snp.centerY)
             $0.centerX.equalToSuperview()
         }
         priceLabel.snp.makeConstraints {
@@ -183,6 +190,14 @@ class CryptoDetailViewController: UIViewController {
             $0.top.equalTo(priceLabel.snp.bottom).offset(8)
             $0.centerX.equalToSuperview()
         }
+        
+        view.addSubview(arrowImageView)
+        arrowImageView.snp.makeConstraints {
+            $0.centerY.equalTo(percentLabel)
+            $0.right.equalTo(percentLabel.snp.left).offset(-8)
+            $0.size.equalTo(16)
+        }
+        
         periodControl.addTarget(self, action: #selector(periodChanged), for: .valueChanged)
         periodControl.snp.makeConstraints {
             $0.top.equalTo(percentLabel.snp.bottom).offset(24)
@@ -230,10 +245,10 @@ class CryptoDetailViewController: UIViewController {
     private func bindViewModel() {
         titleLabel.text = "\(viewModel.name) (\(viewModel.symbol))"
         priceLabel.text = viewModel.priceFormatted
-        percentLabel.text = viewModel.priceChangeFormatted
-        percentLabel.textColor = viewModel.priceChangeColor
-        marketCapValue.text = viewModel.marketCapFormatted
-        circulatingValue.text = viewModel.circulatingSupplyFormatted
+        percentLabel.text = viewModel.percentFormatted
+        percentLabel.textColor = viewModel.percentColor
+        arrowImageView.image = UIImage(systemName: viewModel.arrowImageName)
+        arrowImageView.tintColor = viewModel.arrowColor
 
         viewModel.onPeriodChanged = { [weak self] period in
             // Если появятся графики

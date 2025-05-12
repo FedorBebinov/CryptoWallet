@@ -32,6 +32,8 @@
 		854229A72DD0C4D700965106 /* CryptoResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229A62DD0C4D700965106 /* CryptoResponse.swift */; };
 		854229A92DD0D1E300965106 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229A82DD0D1E300965106 /* Constants.swift */; };
 		854229AB2DD0FE8900965106 /* CryptoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229AA2DD0FE8900965106 /* CryptoDetailViewModel.swift */; };
+		854229AD2DD2168800965106 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 854229AC2DD2168800965106 /* Poppins-SemiBold.ttf */; };
+		854229AF2DD22E0200965106 /* CryptoFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229AE2DD22E0200965106 /* CryptoFormatter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,6 +63,8 @@
 		854229A62DD0C4D700965106 /* CryptoResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoResponse.swift; sourceTree = "<group>"; };
 		854229A82DD0D1E300965106 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		854229AA2DD0FE8900965106 /* CryptoDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoDetailViewModel.swift; sourceTree = "<group>"; };
+		854229AC2DD2168800965106 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
+		854229AE2DD22E0200965106 /* CryptoFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoFormatter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,7 @@
 				854229632DCBFA5700965106 /* AppDelegate.swift */,
 				854229652DCBFA5700965106 /* SceneDelegate.swift */,
 				854229962DCE65E600965106 /* Poppins-Regular.ttf */,
+				854229AC2DD2168800965106 /* Poppins-SemiBold.ttf */,
 				8542299E2DCEB51C00965106 /* Poppins-Bold.ttf */,
 				8542296C2DCBFA5800965106 /* Assets.xcassets */,
 				8542296E2DCBFA5800965106 /* LaunchScreen.storyboard */,
@@ -134,6 +139,7 @@
 			children = (
 				854229882DCCC3C100965106 /* UserSessionService.swift */,
 				854229A42DD0B59500965106 /* CryptoAPIService.swift */,
+				854229AE2DD22E0200965106 /* CryptoFormatter.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -262,6 +268,7 @@
 				8542296D2DCBFA5800965106 /* Assets.xcassets in Resources */,
 				8542297B2DCCACC700965106 /* .gitignore in Resources */,
 				8542299F2DCEB51C00965106 /* Poppins-Bold.ttf in Resources */,
+				854229AD2DD2168800965106 /* Poppins-SemiBold.ttf in Resources */,
 				854229702DCBFA5800965106 /* Base in Resources */,
 				854229972DCE65E600965106 /* Poppins-Regular.ttf in Resources */,
 			);
@@ -275,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				854229952DCD4FEA00965106 /* AuthViewModel.swift in Sources */,
+				854229AF2DD22E0200965106 /* CryptoFormatter.swift in Sources */,
 				854229912DCCEB6D00965106 /* Crypto.swift in Sources */,
 				854229992DCE6C1500965106 /* Font+Extension.swift in Sources */,
 				854229A32DCFA47300965106 /* AppColors.swift in Sources */,

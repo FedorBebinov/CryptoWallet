@@ -29,7 +29,7 @@ final class CryptoListViewController: UIViewController {
     private let homeLabel: UILabel = {
         let l = UILabel()
         l.text = "Home"
-        l.font = .poppinsBold(size: 32)
+        l.font = .poppinsSemiBold(size: 32)
         l.textColor = .white
         return l
     }()
@@ -58,7 +58,7 @@ final class CryptoListViewController: UIViewController {
         let b = UIButton(type: .system)
         b.setTitle("Learn more", for: .normal)
         b.setTitleColor(.black, for: .normal)
-        b.titleLabel?.font = .poppinsBold(size: 14)
+        b.titleLabel?.font = .poppinsSemiBold(size: 14)
         b.backgroundColor = .white
         b.layer.cornerRadius = 16
         b.contentEdgeInsets = UIEdgeInsets(top: 4, left: 18, bottom: 4, right: 18)
@@ -103,7 +103,7 @@ final class CryptoListViewController: UIViewController {
     private let loadingLabel: UILabel = {
         let lbl = UILabel()
         lbl.text = "Loading..."
-        lbl.font = UIFont.systemFont(ofSize: 16)
+        lbl.font = .poppinsRegular(size: 16)
         lbl.textColor = .gray
         return lbl
     }()
@@ -134,7 +134,7 @@ final class CryptoListViewController: UIViewController {
         let btn = UIButton(type: .system)
         btn.setTitle("  Обновить", for: .normal)
         btn.setTitleColor(UIColor(red: 32/255, green: 37/255, blue: 51/255, alpha: 1), for: .normal)
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        btn.titleLabel?.font = .poppinsRegular(size: 18)
         btn.setImage(UIImage(named: "reloadRocket"), for: .normal)
         btn.tintColor = UIColor(red: 180/255, green: 186/255, blue: 197/255, alpha: 1)
         btn.contentHorizontalAlignment = .left
@@ -146,7 +146,7 @@ final class CryptoListViewController: UIViewController {
         let btn = UIButton(type: .system)
         btn.setTitle("  Выйти", for: .normal)
         btn.setTitleColor(UIColor(red: 32/255, green: 37/255, blue: 51/255, alpha: 1), for: .normal)
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        btn.titleLabel?.font = .poppinsRegular(size: 18)
         btn.setImage(UIImage(named: "logoutBin"), for: .normal)
         btn.tintColor = UIColor(red: 180/255, green: 186/255, blue: 197/255, alpha: 1)
         btn.contentHorizontalAlignment = .left

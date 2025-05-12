@@ -45,33 +45,27 @@ final class CryptoDetailViewModel {
     var name: String { crypto.name }
     var symbol: String { crypto.symbol }
     var iconName: String { crypto.iconName }
-
+    
     var priceFormatted: String {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
-        let value = formatter.string(from: NSNumber(value: crypto.price)) ?? "\(crypto.price)"
-        return "$" + value
+        CryptoFormatter.formatPrice(crypto.price)
     }
-
-    var priceChangeFormatted: String {
-        let sign = crypto.priceChange >= 0 ? "▲" : "▼"
-        let percent = String(format: "%.2f%%", abs(crypto.priceChange))
-        return "\(sign) \(percent)"
+    
+    var percentFormatted: String {
+        CryptoFormatter.formatPercent(crypto.priceChange)
     }
-
-    var priceChangeColor: UIColor {
-        crypto.priceChange >= 0 ? UIColor(red: 44/255, green: 168/255, blue: 95/255, alpha: 1) : UIColor.systemRed
+    
+    var percentColor: UIColor {
+        UIColor(red: 147/255, green: 149/255, blue: 164/255, alpha: 1) // Cерый
     }
-
-    var marketCapFormatted: String {
-        // Здесь для демонстрации
-        return "$231,233"
+    
+    var arrowImageName: String {
+        CryptoFormatter.arrowInfo(for: crypto.priceChange).name
     }
-    var circulatingSupplyFormatted: String {
-        return "114.211 \(crypto.symbol)"
+    
+    var arrowColor: UIColor {
+        CryptoFormatter.arrowInfo(for: crypto.priceChange).color
     }
-
+    
     // MARK: - Callbacks
 
     var onPeriodChanged: ((CryptoPeriod) -> Void)?

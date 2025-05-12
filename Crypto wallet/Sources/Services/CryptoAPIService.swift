@@ -63,7 +63,7 @@ final class CryptoAPIService {
                 let crypto = Crypto(
                     name: data.name,
                     symbol: data.symbol.uppercased(),
-                    iconName: data.symbol.lowercased(), // Например: btc, eth и т.д.
+                    iconName: data.symbol.lowercased(), 
                     price: marketData.price_usd,
                     priceChange: marketData.percent_change_usd_last_24_hours
                 )
