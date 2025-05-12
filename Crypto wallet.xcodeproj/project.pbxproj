@@ -102,9 +102,8 @@
 				8542297C2DCCAD2900965106 /* Sources */,
 				854229632DCBFA5700965106 /* AppDelegate.swift */,
 				854229652DCBFA5700965106 /* SceneDelegate.swift */,
-				854229962DCE65E600965106 /* Poppins-Regular.ttf */,
-				854229AC2DD2168800965106 /* Poppins-SemiBold.ttf */,
-				8542299E2DCEB51C00965106 /* Poppins-Bold.ttf */,
+				854229A02DCF625200965106 /* MainTabBarController.swift */,
+				854229B02DD26D7A00965106 /* Fonts */,
 				8542296C2DCBFA5800965106 /* Assets.xcassets */,
 				8542296E2DCBFA5800965106 /* LaunchScreen.storyboard */,
 				854229712DCBFA5800965106 /* Info.plist */,
@@ -196,9 +195,18 @@
 			children = (
 				854229862DCCBB8E00965106 /* AppCoordinator.swift */,
 				8542298E2DCCEB4F00965106 /* AppFlow.swift */,
-				854229A02DCF625200965106 /* MainTabBarController.swift */,
 			);
 			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		854229B02DD26D7A00965106 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				854229962DCE65E600965106 /* Poppins-Regular.ttf */,
+				854229AC2DD2168800965106 /* Poppins-SemiBold.ttf */,
+				8542299E2DCEB51C00965106 /* Poppins-Bold.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -9,25 +9,21 @@ import UIKit
 import SnapKit
 
 class CryptoDetailViewController: UIViewController {
-
+    
     // MARK: - Public
-
+    
     var onBack: (() -> Void)?
-
+    
     // MARK: - Private
-
+    
     private let viewModel: CryptoDetailViewModel
-
+    
     // MARK: - UI Elements
     
     private let backBackground: UIView = {
         let v = UIView()
         v.backgroundColor = .white
         v.layer.cornerRadius = 24
-        /*v.layer.shadowColor = UIColor.black.cgColor
-        v.layer.shadowOpacity = 0.10
-        v.layer.shadowRadius = 4
-        v.layer.shadowOffset = CGSize(width: 0, height: 2)*/
         return v
     }()
     
@@ -39,7 +35,7 @@ class CryptoDetailViewController: UIViewController {
         button.contentHorizontalAlignment = .center
         return button
     }()
-
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = .poppinsRegular(size: 14)
@@ -47,14 +43,14 @@ class CryptoDetailViewController: UIViewController {
         label.textAlignment = .center
         return label
     }()
-
+    
     private let priceLabel: UILabel = {
         let label = UILabel()
         label.font = .poppinsRegular(size: 28)
-        label.textColor = UIColor(red: 35/255, green: 39/255, blue: 47/255, alpha: 1)
+        label.textColor = .priceText
         return label
     }()
-
+    
     private let percentLabel: UILabel = {
         let label = UILabel()
         label.font = .poppinsRegular(size: 14)
@@ -67,7 +63,7 @@ class CryptoDetailViewController: UIViewController {
         iv.tintColor = .systemGreen
         return iv
     }()
-
+    
     private let periodControl: UISegmentedControl = {
         let control = UISegmentedControl(items: CryptoPeriod.allCases.map { $0.title })
         control.selectedSegmentIndex = 0
@@ -90,75 +86,75 @@ class CryptoDetailViewController: UIViewController {
     
     private let statisticCard: UIView = {
         let v = UIView()
-        v.backgroundColor = UIColor(red: 242/255, green: 243/255, blue: 247/255, alpha: 1)
-        v.layer.cornerRadius = 28
+        v.backgroundColor = .statsColor
+        v.layer.cornerRadius = 40
         v.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         v.layer.masksToBounds = true
         return v
     }()
-
+    
     private let statTitleLabel: UILabel = {
         let l = UILabel()
         l.text = "Market Statistic"
-        l.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        l.font = .poppinsRegular(size: 20)
         l.textColor = .black
         return l
     }()
-
+    
     private let marketCapTitle: UILabel = {
         let l = UILabel()
         l.text = "Market capitalization"
-        l.font = UIFont.systemFont(ofSize: 15)
+        l.font = .poppinsRegular(size: 14)
         l.textColor = .lightGray
         return l
     }()
-
+    
     private let marketCapValue: UILabel = {
         let l = UILabel()
-        l.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        l.font = .poppinsSemiBold(size: 14)
         l.textColor = .black
         l.textAlignment = .right
         return l
     }()
-
+    
     private let circulatingTitle: UILabel = {
         let l = UILabel()
         l.text = "Circulating Supply"
-        l.font = UIFont.systemFont(ofSize: 15)
+        l.font = .poppinsRegular(size: 14)
         l.textColor = .lightGray
         return l
     }()
-
+    
     private let circulatingValue: UILabel = {
         let l = UILabel()
-        l.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        l.font = .poppinsSemiBold(size: 14)
         l.textColor = .black
         l.textAlignment = .right
         return l
     }()
-
+    
     // MARK: - Init
-
-    init(crypto: Crypto) {
-        self.viewModel = CryptoDetailViewModel(crypto: crypto)
+    
+    init(viewModel: CryptoDetailViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     // MARK: - Lifecycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 246/255, green: 248/255, blue: 250/255, alpha: 1)
+        view.backgroundColor = .backgroundColor
         setupUI()
         bindViewModel()
     }
-
+    
     // MARK: - Setup
-
+    
     private func setupUI() {
         view.addSubview(backBackground)
         backBackground.snp.makeConstraints {
@@ -205,63 +201,65 @@ class CryptoDetailViewController: UIViewController {
             $0.width.equalTo(280)
             $0.height.equalTo(38)
         }
-
+        
         statisticCard.snp.makeConstraints {
             $0.left.right.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(0)
-            $0.height.equalTo(148)
+            $0.height.equalTo(160)
         }
-
+        
         statisticCard.addSubview(statTitleLabel)
         statisticCard.addSubview(marketCapTitle)
         statisticCard.addSubview(marketCapValue)
         statisticCard.addSubview(circulatingTitle)
         statisticCard.addSubview(circulatingValue)
-
+        
         statTitleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(18)
-            $0.left.equalToSuperview().offset(22)
+            $0.top.equalToSuperview().offset(25)
+            $0.left.equalToSuperview().offset(25)
         }
         marketCapTitle.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(22)
-            $0.top.equalTo(statTitleLabel.snp.bottom).offset(28)
+            $0.left.equalTo(statTitleLabel.snp.left)
+            $0.top.equalTo(statTitleLabel.snp.bottom).offset(15)
             $0.right.lessThanOrEqualTo(statisticCard.snp.centerX)
         }
         marketCapValue.snp.makeConstraints {
             $0.centerY.equalTo(marketCapTitle.snp.centerY)
-            $0.right.equalToSuperview().inset(22)
+            $0.right.equalToSuperview().inset(25)
         }
         circulatingTitle.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(22)
-            $0.top.equalTo(marketCapTitle.snp.bottom).offset(22)
+            $0.left.equalTo(statTitleLabel.snp.left)
+            $0.top.equalTo(marketCapTitle.snp.bottom).offset(15)
             $0.right.lessThanOrEqualTo(statisticCard.snp.centerX)
         }
         circulatingValue.snp.makeConstraints {
             $0.centerY.equalTo(circulatingTitle.snp.centerY)
-            $0.right.equalToSuperview().inset(22)
+            $0.right.equalToSuperview().inset(25)
         }
     }
-
+    
     private func bindViewModel() {
         titleLabel.text = "\(viewModel.name) (\(viewModel.symbol))"
         priceLabel.text = viewModel.priceFormatted
         percentLabel.text = viewModel.percentFormatted
         percentLabel.textColor = viewModel.percentColor
-        arrowImageView.image = UIImage(systemName: viewModel.arrowImageName)
+        arrowImageView.image = UIImage(named: viewModel.arrowImageName)
         arrowImageView.tintColor = viewModel.arrowColor
-
-        viewModel.onPeriodChanged = { [weak self] period in
-            // Если появятся графики
+        marketCapValue.text = viewModel.marketCapFormatted
+        circulatingValue.text = viewModel.circulatingSupplyFormatted
+        
+        viewModel.onPeriodChanged = { period in
+            // Если появятся графики, для последующего расширения
             print("Period selected: \(period.title)")
         }
     }
-
+    
     // MARK: - Actions
-
+    
     @objc private func backTapped() {
         onBack?()
     }
-
+    
     @objc private func periodChanged() {
         viewModel.setPeriod(index: periodControl.selectedSegmentIndex)
     }

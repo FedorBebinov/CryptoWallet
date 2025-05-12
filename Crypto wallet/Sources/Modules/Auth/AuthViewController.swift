@@ -11,8 +11,11 @@ import SnapKit
 final class AuthViewController: UIViewController {
     
     let viewModel: AuthViewModel
-    var onLoginSuccess: (() -> Void)?
-
+    
+    private var keyboardShown = false
+    private var bottomConstraint: Constraint?
+    private let contentView = UIView()
+    
     
     private let imageView: UIImageView = {
         let iv = UIImageView()
@@ -64,7 +67,7 @@ final class AuthViewController: UIViewController {
         let btn = UIButton(type: .system)
         btn.setTitle("Login", for: .normal)
         btn.setTitleColor(.white, for: .normal)
-        btn.backgroundColor = UIColor(red: 19/255, green: 22/255, blue: 34/255, alpha: 1)
+        btn.backgroundColor = .loginButtonColor
         btn.layer.cornerRadius = 25
         btn.titleLabel?.font = .poppinsRegular(size: 15)
         btn.addTarget(nil, action: #selector(loginTapped), for: .touchUpInside)
@@ -82,16 +85,32 @@ final class AuthViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 240/255, green: 243/255, blue: 245/255, alpha: 1)
+        view.backgroundColor = .backgroundColor
         setupFields()
         setupLayout()
         
-        viewModel.onAuthSuccess = { [weak self] in
-            self?.onLoginSuccess?()
-        }
         viewModel.onAuthFailure = { [weak self] message in
             self?.showError(message)
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(_:)),
+            name: UIResponder.keyboardWillShowNotification, object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(_:)),
+            name: UIResponder.keyboardWillHideNotification, object: nil
+        )
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
     }
     
     private func setupFields() {
@@ -142,9 +161,11 @@ final class AuthViewController: UIViewController {
     
     private func setupLayout() {
         view.addSubview(imageView)
-        view.addSubview(usernameField)
-        view.addSubview(passwordField)
-        view.addSubview(loginButton)
+        view.addSubview(contentView)
+        
+        contentView.addSubview(usernameField)
+        contentView.addSubview(passwordField)
+        contentView.addSubview(loginButton)
         
         imageView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(13)
@@ -152,8 +173,14 @@ final class AuthViewController: UIViewController {
             make.right.equalToSuperview().offset(-44)
         }
         
+        contentView.snp.makeConstraints { make in
+            make.left.right.equalToSuperview()
+            make.top.equalTo(imageView.snp.bottom).offset(60)
+            bottomConstraint = make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).constraint
+        }
+        
         usernameField.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(174)
+            make.top.equalToSuperview().offset(85)
             make.left.equalToSuperview().offset(25)
             make.right.equalToSuperview().offset(-25)
             make.height.equalTo(55)
@@ -170,6 +197,7 @@ final class AuthViewController: UIViewController {
             make.height.equalTo(55)
             make.left.equalToSuperview().offset(25)
             make.right.equalToSuperview().offset(-25)
+            make.bottom.lessThanOrEqualToSuperview().offset(-20)
         }
     }
     
@@ -177,6 +205,29 @@ final class AuthViewController: UIViewController {
         viewModel.username = usernameField.text ?? ""
         viewModel.password = passwordField.text ?? ""
         viewModel.login()
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let endFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect,
+              let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+        
+        let keyboardHeight = endFrame.height
+        bottomConstraint?.update(offset: -keyboardHeight-24)
+        
+        UIView.animate(withDuration: animationDuration) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let animationDuration = userInfo[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double else { return }
+        
+        bottomConstraint?.update(offset: 0)
+        UIView.animate(withDuration: animationDuration) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func showError(_ message: String) {

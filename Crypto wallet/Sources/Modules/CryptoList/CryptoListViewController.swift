@@ -12,8 +12,6 @@ final class CryptoListViewController: UIViewController {
     // MARK: - Properties
     
     let viewModel: CryptoListViewModel
-    var onLogout: (() -> Void)?
-    var onCoinSelect: ((Crypto) -> Void)?
     private var didSetupLayout = false
     private var isMenuVisible = false
     
@@ -38,7 +36,7 @@ final class CryptoListViewController: UIViewController {
         let b = UIButton(type: .system)
         b.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         b.tintColor = .black
-        b.backgroundColor = .backgroundGray 
+        b.backgroundColor = .tableBackground
         b.layer.cornerRadius = 24
         b.layer.masksToBounds = true
         b.layer.borderWidth = 1
@@ -55,19 +53,37 @@ final class CryptoListViewController: UIViewController {
     }()
     
     private let learnMoreButton: UIButton = {
-        let b = UIButton(type: .system)
-        b.setTitle("Learn more", for: .normal)
-        b.setTitleColor(.black, for: .normal)
-        b.titleLabel?.font = .poppinsSemiBold(size: 14)
-        b.backgroundColor = .white
-        b.layer.cornerRadius = 16
-        b.contentEdgeInsets = UIEdgeInsets(top: 4, left: 18, bottom: 4, right: 18)
-        return b
+        let btn = UIButton(type: .system)
+        if #available(iOS 15.0, *) {
+            var config = UIButton.Configuration.filled()
+            config.baseBackgroundColor = .white
+            config.baseForegroundColor = .black
+            config.contentInsets = NSDirectionalEdgeInsets(top: 7, leading: 23, bottom: 7, trailing: 23)
+            config.cornerStyle = .capsule
+            config.attributedTitle = AttributedString(
+                "Learn more",
+                attributes: AttributeContainer([
+                    .font: UIFont.poppinsSemiBold(size: 14)
+                ])
+            )
+            btn.configuration = config
+            btn.layer.cornerRadius = 16
+            btn.clipsToBounds = true
+        } else {
+            btn.setTitle("Learn more", for: .normal)
+            btn.setTitleColor(.black, for: .normal)
+            btn.titleLabel?.font = .poppinsSemiBold(size: 14)
+            btn.backgroundColor = .white
+            btn.layer.cornerRadius = 16
+            btn.clipsToBounds = true
+            btn.contentEdgeInsets = UIEdgeInsets(top: 4, left: 18, bottom: 4, right: 18)
+        }
+        return btn
     }()
     
     private let tableHeaderContainer: UIView = {
         let v = UIView()
-        v.backgroundColor = .backgroundGray
+        v.backgroundColor = .tableBackground
         v.layer.cornerRadius = 32
         v.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         v.layer.masksToBounds = true
@@ -85,14 +101,14 @@ final class CryptoListViewController: UIViewController {
     private let sortButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setImage(UIImage(resource: .sortList), for: .normal)
-        btn.tintColor = UIColor(red: 19/255, green: 22/255, blue: 34/255, alpha: 1)
+        btn.tintColor = .black
         return btn
     }()
     
     private let tableView: UITableView = {
         let tv = UITableView()
         tv.separatorStyle = .none
-        tv.backgroundColor = .backgroundGray
+        tv.backgroundColor = .tableBackground
         tv.rowHeight = 70
         tv.showsVerticalScrollIndicator = false
         return tv
@@ -132,29 +148,67 @@ final class CryptoListViewController: UIViewController {
     
     private let refreshMenuButton: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setTitle("  Обновить", for: .normal)
-        btn.setTitleColor(UIColor(red: 32/255, green: 37/255, blue: 51/255, alpha: 1), for: .normal)
-        btn.titleLabel?.font = .poppinsRegular(size: 18)
-        btn.setImage(UIImage(named: "reloadRocket"), for: .normal)
-        btn.tintColor = UIColor(red: 180/255, green: 186/255, blue: 197/255, alpha: 1)
-        btn.contentHorizontalAlignment = .left
-        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        let icon = UIImage(named: "reloadRocket")
+        if #available(iOS 15.0, *) {
+            var config = UIButton.Configuration.plain()
+            config.image = icon
+            config.baseForegroundColor = .blackText
+            config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+            config.imagePadding = 8
+            config.attributedTitle = AttributedString(
+                "  Обновить",
+                attributes: AttributeContainer([
+                    .font: UIFont.poppinsRegular(size: 18)
+                ])
+            )
+            btn.configuration = config
+            btn.contentHorizontalAlignment = .leading
+            btn.semanticContentAttribute = .forceLeftToRight
+        } else {
+            btn.setTitle("  Обновить", for: .normal)
+            btn.setTitleColor(.blackText, for: .normal)
+            btn.titleLabel?.font = .poppinsRegular(size: 18)
+            btn.setImage(icon, for: .normal)
+            btn.tintColor = .grayText
+            btn.contentHorizontalAlignment = .left
+            btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        }
         return btn
     }()
     
+    
     private let logoutMenuButton: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setTitle("  Выйти", for: .normal)
-        btn.setTitleColor(UIColor(red: 32/255, green: 37/255, blue: 51/255, alpha: 1), for: .normal)
-        btn.titleLabel?.font = .poppinsRegular(size: 18)
-        btn.setImage(UIImage(named: "logoutBin"), for: .normal)
-        btn.tintColor = UIColor(red: 180/255, green: 186/255, blue: 197/255, alpha: 1)
-        btn.contentHorizontalAlignment = .left
-        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        let icon = UIImage(named: "logoutBin")
+        if #available(iOS 15.0, *) {
+            var config = UIButton.Configuration.plain()
+            config.image = icon
+            config.baseForegroundColor = .blackText
+            config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 16)
+            config.imagePadding = 8
+            config.attributedTitle = AttributedString(
+                "  Выйти",
+                attributes: AttributeContainer([
+                    .font: UIFont.poppinsRegular(size: 18)
+                ])
+            )
+            btn.configuration = config
+            btn.contentHorizontalAlignment = .leading
+            btn.semanticContentAttribute = .forceLeftToRight
+        } else {
+            btn.setTitle("  Выйти", for: .normal)
+            btn.setTitleColor(.blackText, for: .normal)
+            btn.titleLabel?.font = .poppinsRegular(size: 18)
+            btn.setImage(icon, for: .normal)
+            btn.tintColor = .grayText
+            btn.contentHorizontalAlignment = .left
+            btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        }
         return btn
     }()
     
     private var menuBackgroundTap: UITapGestureRecognizer?
+    private var overlayView: UIView?
     
     // MARK: - Init
     
@@ -192,8 +246,8 @@ final class CryptoListViewController: UIViewController {
         
         headerBackgroundView.addSubview(styleImageView)
         styleImageView.snp.makeConstraints { make in
-            make.width.height.equalTo(212)
-            make.left.equalToSuperview().offset(189)
+            make.width.height.equalTo(195)
+            make.left.equalToSuperview().offset(200)
             make.top.equalToSuperview().offset(119)
         }
         
@@ -258,62 +312,73 @@ final class CryptoListViewController: UIViewController {
     private func setupActions() {
         dotsButton.addTarget(self, action: #selector(showCustomMenu), for: .touchUpInside)
         learnMoreButton.addTarget(self, action: #selector(learnMoreTapped), for: .touchUpInside)
-        sortButton.addTarget(self, action: #selector(showSortMenu), for: .touchUpInside)
         refreshMenuButton.addTarget(self, action: #selector(handleRefreshTap), for: .touchUpInside)
         logoutMenuButton.addTarget(self, action: #selector(handleLogoutTap), for: .touchUpInside)
+        
+        let byPrice = UIAction(title: "По цене", image: UIImage(systemName: "dollarsign.circle")) { [weak self] _ in
+            self?.viewModel.setSort(.price)
+        }
+        let byGrowth = UIAction(title: "По росту", image: UIImage(systemName: "arrow.up.right")) { [weak self] _ in
+            self?.viewModel.setSort(.topGrowth)
+        }
+        let byDrop = UIAction(title: "По падению", image: UIImage(systemName: "arrow.down.right")) { [weak self] _ in
+            self?.viewModel.setSort(.topDrop)
+        }
+        let menu = UIMenu(title: "Сортировка", options: .displayInline, children: [byPrice, byGrowth, byDrop])
+        sortButton.menu = menu
+        sortButton.showsMenuAsPrimaryAction = true
     }
     
     @objc private func showCustomMenu() {
         if isMenuVisible {
             hideCustomMenu()
-        } else {
-            if menuStack.arrangedSubviews.isEmpty {
-                menuStack.addArrangedSubview(refreshMenuButton)
-                menuStack.addArrangedSubview(logoutMenuButton)
-            }
-            menuView.addSubview(menuStack)
-            menuStack.snp.remakeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-            
-            view.addSubview(menuView)
-            let width: CGFloat = 160
-            let height: CGFloat = 86
-            let buttonFrame = dotsButton.superview?.convert(dotsButton.frame, to: view) ?? .zero
-            var topOffset = buttonFrame.maxY + 6
-            if topOffset + height > view.bounds.height {
-                topOffset = buttonFrame.minY - height - 6
-            }
-            menuView.snp.remakeConstraints { make in
-                make.width.equalTo(width)
-                make.height.equalTo(height)
-                make.top.equalToSuperview().offset(topOffset)
-                make.right.equalToSuperview().inset(view.bounds.width - buttonFrame.maxX)
-            }
-            
-            let tap = UITapGestureRecognizer(target: self, action: #selector(closeMenuOnBackground))
-            tap.cancelsTouchesInView = false
-            view.addGestureRecognizer(tap)
-            menuBackgroundTap = tap
-            
-            isMenuVisible = true
+            return
         }
+        
+        let overlay = UIView(frame: view.bounds)
+        overlay.backgroundColor = UIColor.clear
+        let tap = UITapGestureRecognizer(target: self, action: #selector(closeMenuOnBackground))
+        overlay.addGestureRecognizer(tap)
+        overlay.isUserInteractionEnabled = true
+        view.addSubview(overlay)
+        self.overlayView = overlay
+        
+        if menuStack.arrangedSubviews.isEmpty {
+            menuStack.addArrangedSubview(refreshMenuButton)
+            menuStack.addArrangedSubview(logoutMenuButton)
+        }
+        menuView.addSubview(menuStack)
+        menuStack.snp.remakeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        view.addSubview(menuView)
+        let width: CGFloat = 160
+        let height: CGFloat = 86
+        let buttonFrame = dotsButton.superview?.convert(dotsButton.frame, to: view) ?? .zero
+        var topOffset = buttonFrame.maxY + 6
+        if topOffset + height > view.bounds.height {
+            topOffset = buttonFrame.minY - height - 6
+        }
+        menuView.snp.remakeConstraints { make in
+            make.width.equalTo(width)
+            make.height.equalTo(height)
+            make.top.equalToSuperview().offset(topOffset)
+            make.right.equalToSuperview().inset(view.bounds.width - buttonFrame.maxX)
+        }
+        
+        isMenuVisible = true
     }
     
     @objc private func closeMenuOnBackground(_ gesture: UITapGestureRecognizer) {
-        let location = gesture.location(in: view)
-        if !menuView.frame.contains(location) {
-            hideCustomMenu()
-        }
+        hideCustomMenu()
     }
     
     private func hideCustomMenu() {
         menuView.removeFromSuperview()
         menuStack.removeFromSuperview()
-        if let tap = menuBackgroundTap {
-            view.removeGestureRecognizer(tap)
-            menuBackgroundTap = nil
-        }
+        overlayView?.removeFromSuperview()
+        overlayView = nil
         isMenuVisible = false
     }
     
@@ -330,21 +395,6 @@ final class CryptoListViewController: UIViewController {
         let alert = UIAlertController(title: "Coming soon", message: "Affiliate program will be available soon!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
-    }
-    
-    @objc private func showSortMenu(_ sender: UIButton) {
-        let byPrice = UIAction(title: "По цене", image: UIImage(systemName: "dollarsign.circle")) { [weak self] _ in
-            self?.viewModel.setSort(.price)
-        }
-        let byGrowth = UIAction(title: "По росту", image: UIImage(systemName: "arrow.up.right")) { [weak self] _ in
-            self?.viewModel.setSort(.topGrowth)
-        }
-        let byDrop = UIAction(title: "По падению", image: UIImage(systemName: "arrow.down.right")) { [weak self] _ in
-            self?.viewModel.setSort(.topDrop)
-        }
-        let menu = UIMenu(title: "Сортировка", options: .displayInline, children: [byPrice, byGrowth, byDrop])
-        sender.menu = menu
-        sender.showsMenuAsPrimaryAction = true
     }
     
     @objc private func handleRefresh() {
@@ -383,8 +433,6 @@ final class CryptoListViewController: UIViewController {
             alert.addAction(UIAlertAction(title: "ОК", style: .default))
             self?.present(alert, animated: true)
         }
-        viewModel.onLogout = { [weak self] in self?.onLogout?() }
-        viewModel.onCoinSelect = { [weak self] coin in self?.onCoinSelect?(coin) }
     }
 }
 

@@ -10,14 +10,14 @@ import Foundation
 final class CryptoAPIService {
     static let shared = CryptoAPIService()
     private init() {}
-
+    
     private let baseURL = "https://data.messari.io/api/v1/assets"
-
+    
     func fetchCryptos(symbols: [String], completion: @escaping (Result<[Crypto], Error>) -> Void) {
         var cryptos: [Crypto] = []
         let group = DispatchGroup()
         var lastError: Error?
-
+        
         for symbol in symbols {
             group.enter()
             fetchCrypto(symbol: symbol) { result in
@@ -30,7 +30,7 @@ final class CryptoAPIService {
                 group.leave()
             }
         }
-
+        
         group.notify(queue: .main) {
             if !cryptos.isEmpty {
                 completion(.success(cryptos))
@@ -41,7 +41,7 @@ final class CryptoAPIService {
             }
         }
     }
-
+    
     private func fetchCrypto(symbol: String, completion: @escaping (Result<Crypto, Error>) -> Void) {
         let urlString = "\(baseURL)/\(symbol)/metrics"
         guard let url = URL(string: urlString) else {
@@ -60,12 +60,18 @@ final class CryptoAPIService {
                 let decoded = try JSONDecoder().decode(CryptoResponse.self, from: data)
                 let data = decoded.data
                 let marketData = data.market_data
+                
+                let marketCap = data.marketcap.current_marketcap_usd
+                let circulating = data.supply.circulating
+                
                 let crypto = Crypto(
                     name: data.name,
                     symbol: data.symbol.uppercased(),
-                    iconName: data.symbol.lowercased(), 
+                    iconName: data.symbol.lowercased(),
                     price: marketData.price_usd,
-                    priceChange: marketData.percent_change_usd_last_24_hours
+                    priceChange: marketData.percent_change_usd_last_24_hours,
+                    marketCap: marketCap,
+                    circulatingSupply: circulating
                 )
                 completion(.success(crypto))
             } catch {

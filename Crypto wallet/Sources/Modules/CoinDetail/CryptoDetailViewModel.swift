@@ -14,7 +14,7 @@ enum CryptoPeriod: Int, CaseIterable {
     case year
     case all
     case point
-
+    
     var title: String {
         switch self {
         case .day: return "24H"
@@ -27,21 +27,21 @@ enum CryptoPeriod: Int, CaseIterable {
 }
 
 final class CryptoDetailViewModel {
-
+    
     // MARK: - Properties
-
+    
     private let crypto: Crypto
-
+    
     // MARK: - State
-
+    
     private(set) var selectedPeriod: CryptoPeriod = .day {
         didSet {
             onPeriodChanged?(selectedPeriod)
         }
     }
-
+    
     // MARK: - Outputs
-
+    
     var name: String { crypto.name }
     var symbol: String { crypto.symbol }
     var iconName: String { crypto.iconName }
@@ -66,18 +66,34 @@ final class CryptoDetailViewModel {
         CryptoFormatter.arrowInfo(for: crypto.priceChange).color
     }
     
+    var marketCapFormatted: String {
+        if let cap = crypto.marketCap {
+            return CryptoFormatter.formatMarketCap(cap)
+        } else {
+            return "—"
+        }
+    }
+    
+    var circulatingSupplyFormatted: String {
+        if let circ = crypto.circulatingSupply {
+            return CryptoFormatter.formatCirculatingSupply(circ, symbol: crypto.symbol)
+        } else {
+            return "—"
+        }
+    }
+    
     // MARK: - Callbacks
-
+    
     var onPeriodChanged: ((CryptoPeriod) -> Void)?
-
+    
     // MARK: - Init
-
+    
     init(crypto: Crypto) {
         self.crypto = crypto
     }
-
+    
     // MARK: - Actions
-
+    
     func setPeriod(index: Int) {
         guard let period = CryptoPeriod(rawValue: index) else { return }
         selectedPeriod = period

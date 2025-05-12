@@ -15,9 +15,19 @@ struct CryptoData: Decodable {
     let name: String
     let symbol: String
     let market_data: MarketData
+    let marketcap: MarketCap
+    let supply: Supply
 }
 
 struct MarketData: Decodable {
     let price_usd: Double
     let percent_change_usd_last_24_hours: Double
+}
+
+struct MarketCap: Decodable {
+    let current_marketcap_usd: Double?
+}
+
+struct Supply: Decodable {
+    let circulating: Double?
 }

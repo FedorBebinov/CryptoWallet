@@ -13,3 +13,8 @@ enum CryptoList {
         "dogecoin", "tether", "stellar", "cardano", "xrp"
     ]
 }
+
+enum AuthData {
+    static let validUsername = "1234"
+    static let validPassword = "1234"
+}

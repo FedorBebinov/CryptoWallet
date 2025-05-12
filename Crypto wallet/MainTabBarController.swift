@@ -26,8 +26,8 @@ final class MainTabBarController: UITabBarController {
         let navHome = UINavigationController(rootViewController: cryptoListVC)
         navHome.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "homeTab"), selectedImage: UIImage(named: "homeTab"))
         navHome.tabBarItem.imageInsets = UIEdgeInsets(top: 8, left: 0, bottom: -8, right: 0)
-        cryptoListVC.onLogout = { [weak self] in self?.onLogout?() }
-        cryptoListVC.onCoinSelect = { [weak self] crypto in self?.onShowCryptoDetail?(crypto) }
+        cryptoListViewModel.onLogout = { [weak self] in self?.onLogout?() }
+        cryptoListViewModel.onCoinSelect = { [weak self] crypto in self?.onShowCryptoDetail?(crypto) }
         
         let statsVC = UIViewController()
         statsVC.view.backgroundColor = .white

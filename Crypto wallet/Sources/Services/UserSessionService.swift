@@ -19,7 +19,7 @@ final class UserSessionService {
     }
     
     func login(username: String, password: String) -> Bool {
-        if username == "1234" && password == "1234" {
+        if username == AuthData.validUsername && password == AuthData.validPassword {
             setLoggedIn(true)
             return true
         } else {

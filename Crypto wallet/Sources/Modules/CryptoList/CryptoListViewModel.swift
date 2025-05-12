@@ -17,38 +17,38 @@ final class CryptoListViewModel {
     private(set) var cryptos: [Crypto] = []
     private(set) var sortType: CryptoSortType = .price
     var isLoading: Bool = false
-
+    
     var onUpdate: (() -> Void)?
     var onError: ((String) -> Void)?
     var onLogout: (() -> Void)?
     var onCoinSelect: ((Crypto) -> Void)?
     
     // MARK: - Public API
-
+    
     func start() {
         fetchData()
     }
-
+    
     func reload() {
         fetchData()
     }
-
+    
     var count: Int { cryptos.count }
     func crypto(at index: Int) -> Crypto {
         cryptos[index]
     }
-        
+    
     func setSort(_ type: CryptoSortType) {
         sortType = type
         applySort()
         onUpdate?()
     }
-
+    
     func didSelectCoin(at index: Int) {
         guard cryptos.indices.contains(index) else { return }
         onCoinSelect?(cryptos[index])
     }
-
+    
     func logout() {
         onLogout?()
     }

@@ -13,4 +13,6 @@ struct Crypto: Equatable {
     let iconName: String
     let price: Double
     let priceChange: Double
+    let marketCap: Double?          
+    let circulatingSupply: Double?
 }

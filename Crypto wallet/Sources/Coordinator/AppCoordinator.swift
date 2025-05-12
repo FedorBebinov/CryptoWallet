@@ -7,11 +7,12 @@
 
 import UIKit
 
-protocol Coordiantor: AnyObject {
+protocol Coordinator: AnyObject {
     func start()
 }
 
-class AppCoordinator: Coordiantor {
+class AppCoordinator: Coordinator {
+    
     private let window: UIWindow
     private let userSessionService: UserSessionService
     private var currentFlow: AppFlow?
@@ -32,11 +33,11 @@ class AppCoordinator: Coordiantor {
         switch flow {
         case .auth:
             let viewModel = AuthViewModel(userSessionService: userSessionService)
-            let loginVC = AuthViewController(viewModel: viewModel)
-            loginVC.onLoginSuccess = { [weak self] in
+            viewModel.onAuthSuccess = { [weak self] in
                 self?.userSessionService.setLoggedIn(true)
                 self?.show(flow: .cryptoList)
             }
+            let loginVC = AuthViewController(viewModel: viewModel)
             window.rootViewController = loginVC
             window.makeKeyAndVisible()
             
@@ -63,7 +64,8 @@ class AppCoordinator: Coordiantor {
             guard let tabBar = mainTabBarController,
                   let nav = tabBar.selectedViewController as? UINavigationController else { return }
             
-            let coinVC = CryptoDetailViewController(crypto: crypto)
+            let viewModel = CryptoDetailViewModel(crypto: crypto)
+            let coinVC = CryptoDetailViewController(viewModel: viewModel)
             coinVC.onBack = {
                 nav.popViewController(animated: true)
             }
