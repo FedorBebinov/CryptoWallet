@@ -20,6 +20,8 @@ class CryptoDetailViewController: UIViewController {
     
     // MARK: - UI Elements
     
+    private let segmentedView = ControlView(items: ["24H", "1W", "1Y", "ALL", "Point"])
+    
     private let backBackground: UIView = {
         let v = UIView()
         v.backgroundColor = .white
@@ -64,7 +66,7 @@ class CryptoDetailViewController: UIViewController {
         return iv
     }()
     
-    private let periodControl: UISegmentedControl = {
+    /*private let periodControl: UISegmentedControl = {
         let control = UISegmentedControl(items: CryptoPeriod.allCases.map { $0.title })
         control.selectedSegmentIndex = 0
         control.backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -82,7 +84,7 @@ class CryptoDetailViewController: UIViewController {
         control.setTitleTextAttributes(normalAttributes, for: .normal)
         control.setTitleTextAttributes(selectedAttributes, for: .selected)
         return control
-    }()
+    }()*/
     
     private let statisticCard: UIView = {
         let v = UIView()
@@ -149,6 +151,7 @@ class CryptoDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .backgroundColor
+        
         setupUI()
         bindViewModel()
     }
@@ -171,7 +174,6 @@ class CryptoDetailViewController: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(priceLabel)
         view.addSubview(percentLabel)
-        view.addSubview(periodControl)
         view.addSubview(statisticCard)
         
         titleLabel.snp.makeConstraints {
@@ -194,12 +196,16 @@ class CryptoDetailViewController: UIViewController {
             $0.size.equalTo(16)
         }
         
-        periodControl.addTarget(self, action: #selector(periodChanged), for: .valueChanged)
-        periodControl.snp.makeConstraints {
+        view.addSubview(segmentedView)
+        segmentedView.snp.makeConstraints {
             $0.top.equalTo(percentLabel.snp.bottom).offset(24)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(280)
-            $0.height.equalTo(38)
+            $0.width.equalTo(325) 
+            $0.height.equalTo(56)
+        }
+        
+        segmentedView.indexDidChange = { [weak self] idx in
+            self?.viewModel.setPeriod(index: idx)
         }
         
         statisticCard.snp.makeConstraints {
@@ -258,9 +264,5 @@ class CryptoDetailViewController: UIViewController {
     
     @objc private func backTapped() {
         onBack?()
-    }
-    
-    @objc private func periodChanged() {
-        viewModel.setPeriod(index: periodControl.selectedSegmentIndex)
     }
 }

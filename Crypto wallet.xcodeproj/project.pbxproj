@@ -34,6 +34,7 @@
 		854229AB2DD0FE8900965106 /* CryptoDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229AA2DD0FE8900965106 /* CryptoDetailViewModel.swift */; };
 		854229AD2DD2168800965106 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 854229AC2DD2168800965106 /* Poppins-SemiBold.ttf */; };
 		854229AF2DD22E0200965106 /* CryptoFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229AE2DD22E0200965106 /* CryptoFormatter.swift */; };
+		854229B22DD2B91D00965106 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 854229B12DD2B91D00965106 /* CustomSegmentedControl.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		854229AA2DD0FE8900965106 /* CryptoDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoDetailViewModel.swift; sourceTree = "<group>"; };
 		854229AC2DD2168800965106 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		854229AE2DD22E0200965106 /* CryptoFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoFormatter.swift; sourceTree = "<group>"; };
+		854229B12DD2B91D00965106 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,6 +188,7 @@
 			children = (
 				854229922DCCEE5E00965106 /* CryptoDetailViewController.swift */,
 				854229AA2DD0FE8900965106 /* CryptoDetailViewModel.swift */,
+				854229B12DD2B91D00965106 /* CustomSegmentedControl.swift */,
 			);
 			path = CoinDetail;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				854229AB2DD0FE8900965106 /* CryptoDetailViewModel.swift in Sources */,
 				8542299B2DCE96B800965106 /* CryptoTableViewCell.swift in Sources */,
 				854229642DCBFA5700965106 /* AppDelegate.swift in Sources */,
+				854229B22DD2B91D00965106 /* CustomSegmentedControl.swift in Sources */,
 				854229A12DCF625200965106 /* MainTabBarController.swift in Sources */,
 				8542298B2DCCD78800965106 /* AuthViewController.swift in Sources */,
 				854229A52DD0B59500965106 /* CryptoAPIService.swift in Sources */,
