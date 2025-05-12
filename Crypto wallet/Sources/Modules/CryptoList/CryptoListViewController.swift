@@ -14,8 +14,8 @@ final class CryptoListViewController: UIViewController {
     let viewModel: CryptoListViewModel
     var onLogout: (() -> Void)?
     var onCoinSelect: ((Crypto) -> Void)?
-    
     private var didSetupLayout = false
+    private var isMenuVisible = false
     
     // UI
     private let headerBackgroundView: UIView = {
@@ -38,8 +38,8 @@ final class CryptoListViewController: UIViewController {
         let b = UIButton(type: .system)
         b.setImage(UIImage(systemName: "ellipsis"), for: .normal)
         b.tintColor = .black
-        b.backgroundColor = .backgroundGray // мягкий серый бекграунд как на макете
-        b.layer.cornerRadius = 24 // кнопка 36x36 → радиус 18 сделает её круглой
+        b.backgroundColor = .backgroundGray 
+        b.layer.cornerRadius = 24
         b.layer.masksToBounds = true
         b.layer.borderWidth = 1
         b.layer.borderColor = UIColor(white: 1, alpha: 0.16).cgColor
@@ -50,7 +50,6 @@ final class CryptoListViewController: UIViewController {
         let l = UILabel()
         l.text = "Affiliate program"
         l.font = .poppinsRegular(size: 20)
-        //l.textColor = UIColor(white: 1, alpha: 0.85)
         l.textColor = .white
         return l
     }()
@@ -111,6 +110,52 @@ final class CryptoListViewController: UIViewController {
     
     private let refreshControl = UIRefreshControl()
     
+    private let menuView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 16
+        view.layer.shadowColor = UIColor.black.cgColor
+        view.layer.shadowOpacity = 0.07
+        view.layer.shadowRadius = 16
+        view.layer.shadowOffset = CGSize(width: 0, height: 8)
+        view.clipsToBounds = false
+        return view
+    }()
+    
+    private let menuStack: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 0
+        stack.distribution = .fillEqually
+        return stack
+    }()
+    
+    private let refreshMenuButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("  Обновить", for: .normal)
+        btn.setTitleColor(UIColor(red: 32/255, green: 37/255, blue: 51/255, alpha: 1), for: .normal)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        btn.setImage(UIImage(named: "reloadRocket"), for: .normal)
+        btn.tintColor = UIColor(red: 180/255, green: 186/255, blue: 197/255, alpha: 1)
+        btn.contentHorizontalAlignment = .left
+        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        return btn
+    }()
+    
+    private let logoutMenuButton: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("  Выйти", for: .normal)
+        btn.setTitleColor(UIColor(red: 32/255, green: 37/255, blue: 51/255, alpha: 1), for: .normal)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        btn.setImage(UIImage(named: "logoutBin"), for: .normal)
+        btn.tintColor = UIColor(red: 180/255, green: 186/255, blue: 197/255, alpha: 1)
+        btn.contentHorizontalAlignment = .left
+        btn.contentEdgeInsets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        return btn
+    }()
+    
+    private var menuBackgroundTap: UITapGestureRecognizer?
+    
     // MARK: - Init
     
     init(viewModel: CryptoListViewModel) {
@@ -135,9 +180,7 @@ final class CryptoListViewController: UIViewController {
     
     private func setupLayout() {
         
-        
         navigationController?.isNavigationBarHidden = true
-        
         guard !didSetupLayout else { return }
         didSetupLayout = true
         
@@ -213,37 +256,81 @@ final class CryptoListViewController: UIViewController {
     // MARK: - Actions
     
     private func setupActions() {
+        dotsButton.addTarget(self, action: #selector(showCustomMenu), for: .touchUpInside)
         learnMoreButton.addTarget(self, action: #selector(learnMoreTapped), for: .touchUpInside)
         sortButton.addTarget(self, action: #selector(showSortMenu), for: .touchUpInside)
-        
-        let refresh = UIAction(title: "Обновить", image: UIImage(systemName: "arrow.clockwise")) { [weak self] _ in
-            self?.handleRefresh()
-        }
-        let logout = UIAction(title: "Выйти", image: UIImage(systemName: "rectangle.portrait.and.arrow.right")) { [weak self] _ in
-            self?.viewModel.logout()
-        }
-        let menu = UIMenu(children: [refresh, logout])
-        dotsButton.menu = menu
-        dotsButton.showsMenuAsPrimaryAction = true
+        refreshMenuButton.addTarget(self, action: #selector(handleRefreshTap), for: .touchUpInside)
+        logoutMenuButton.addTarget(self, action: #selector(handleLogoutTap), for: .touchUpInside)
     }
     
+    @objc private func showCustomMenu() {
+        if isMenuVisible {
+            hideCustomMenu()
+        } else {
+            if menuStack.arrangedSubviews.isEmpty {
+                menuStack.addArrangedSubview(refreshMenuButton)
+                menuStack.addArrangedSubview(logoutMenuButton)
+            }
+            menuView.addSubview(menuStack)
+            menuStack.snp.remakeConstraints { make in
+                make.edges.equalToSuperview()
+            }
+            
+            view.addSubview(menuView)
+            let width: CGFloat = 160
+            let height: CGFloat = 86
+            let buttonFrame = dotsButton.superview?.convert(dotsButton.frame, to: view) ?? .zero
+            var topOffset = buttonFrame.maxY + 6
+            if topOffset + height > view.bounds.height {
+                topOffset = buttonFrame.minY - height - 6
+            }
+            menuView.snp.remakeConstraints { make in
+                make.width.equalTo(width)
+                make.height.equalTo(height)
+                make.top.equalToSuperview().offset(topOffset)
+                make.right.equalToSuperview().inset(view.bounds.width - buttonFrame.maxX)
+            }
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(closeMenuOnBackground))
+            tap.cancelsTouchesInView = false
+            view.addGestureRecognizer(tap)
+            menuBackgroundTap = tap
+            
+            isMenuVisible = true
+        }
+    }
+    
+    @objc private func closeMenuOnBackground(_ gesture: UITapGestureRecognizer) {
+        let location = gesture.location(in: view)
+        if !menuView.frame.contains(location) {
+            hideCustomMenu()
+        }
+    }
+    
+    private func hideCustomMenu() {
+        menuView.removeFromSuperview()
+        menuStack.removeFromSuperview()
+        if let tap = menuBackgroundTap {
+            view.removeGestureRecognizer(tap)
+            menuBackgroundTap = nil
+        }
+        isMenuVisible = false
+    }
+    
+    @objc private func handleRefreshTap() {
+        hideCustomMenu()
+        handleRefresh()
+    }
+    
+    @objc private func handleLogoutTap() {
+        hideCustomMenu()
+        viewModel.logout()
+    }
     @objc private func learnMoreTapped() {
         let alert = UIAlertController(title: "Coming soon", message: "Affiliate program will be available soon!", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
     }
-    
-    /*@objc private func showDotsMenu(_ sender: UIButton) {
-     let refresh = UIAction(title: "Обновить", image: UIImage(systemName: "arrow.clockwise")) { [weak self] _ in
-     self?.handleRefresh()
-     }
-     let logout = UIAction(title: "Выйти", image: UIImage(systemName: "rectangle.portrait.and.arrow.right")) { [weak self] _ in
-     self?.viewModel.logout()
-     }
-     let menu = UIMenu(children: [refresh, logout])
-     sender.menu = menu
-     sender.showsMenuAsPrimaryAction = true
-     }*/
     
     @objc private func showSortMenu(_ sender: UIButton) {
         let byPrice = UIAction(title: "По цене", image: UIImage(systemName: "dollarsign.circle")) { [weak self] _ in
